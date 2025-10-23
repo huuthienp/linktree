@@ -10,12 +10,14 @@ jobs:
     runs-on: ubuntu-latest
     env:
       SCRIPT_NAME: 'generate_site.py'
-      PYTHON_VERSION: '3.12'
-      TEMP_CLONE: 'temp-clone'
-      UV_PROJECT: '.venv'
+      TEMP_CLONE: 'temp-pythonpagelink'
 
     steps:
     - uses: actions/checkout@v5
+
+    - uses: actions/setup-python@v6
+      with:
+        python-version: '3.12'
 
     - uses: astral-sh/setup-uv@v7
       with:
@@ -29,9 +31,6 @@ jobs:
     - name: Rsync only new files into current directory
       run: rsync -av --ignore-existing "$TEMP_CLONE/" .
 
-    - run: uv python install
-
-    - name: Install dependencies
-      run: uv pip install -r requirements.txt
+    - run: uv pip install -r requirements.txt
 
     - run: python $SCRIPT_NAME
