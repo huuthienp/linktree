@@ -17,8 +17,9 @@ jobs:
     steps:
     - uses: actions/checkout@v5
 
-    - name: Install uv
-      uses: astral-sh/setup-uv@v7
+    - uses: astral-sh/setup-uv@v7
+      with:
+        activate-environment: true
 
     - name: Clone king-tri-ton/pythonpagelink
       env:
@@ -28,19 +29,9 @@ jobs:
     - name: Rsync only new files into current directory
       run: rsync -av --ignore-existing "$TEMP_CLONE/" .
 
-    - name: Set up Python
-      run: uv python install $PYTHON_VERSION
-
-    - name: Set up virtual environment
-      run: uv venv $UV_PROJECT --python $PYTHON_VERSION
-
-    - name: Activate virtual environment
-      run: source "$UV_PROJECT/bin/activate"
+    - run: uv python install
 
     - name: Install dependencies
-      # run: uv run -p $UV_PROJECT pip install jinja2 pyyaml
       run: uv pip install -r requirements.txt
 
-    - name: Generate Site
-      # run: uv run -p $UV_PROJECT python $SCRIPT_NAME
-      run: python $SCRIPT_NAME
+    - run: python $SCRIPT_NAME
