@@ -22,7 +22,8 @@ jobs:
       run: uv python install 3.12
 
     - name: Install dependencies
-      run: uv pip install jinja2 pyyaml
+      # 4c5928d error: No virtual environment found
+      run: uv pip install --system jinja2 pyyaml
 
     - name: Generate Site
       run: python generate_site.py
