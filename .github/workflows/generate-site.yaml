@@ -36,6 +36,11 @@ jobs:
 
     - run: python $SCRIPT_NAME
 
+    - name: Change Branch for Deploy
+      uses: actions/checkout@v5
+      with:
+        ref: gh-pages
+
     - name: Push
       run: |
         git config --global user.name "github-actions[bot]" 
