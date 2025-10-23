@@ -8,6 +8,8 @@ meta:
   author: "Huu Thien Pham"
   siteUrl: "https://huuthienp.github.io/linktree/"
 links:
+  - name: "Email"
+    url: "mailto:hirehuuthienp@icloud.com"
   - name: "Github"
     url: "https://github.com/huuthienp"
   - name: "LinkedIn"
