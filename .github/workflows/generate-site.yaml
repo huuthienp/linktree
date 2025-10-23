@@ -10,7 +10,6 @@ jobs:
     runs-on: ubuntu-latest
     env:
       SCRIPT_NAME: 'generate_site.py'
-      TEMP_CLONE: 'temp-pythonpagelink'
 
     steps:
     - uses: actions/checkout@v5
@@ -23,13 +22,12 @@ jobs:
       with:
         activate-environment: true
 
-    - name: Clone king-tri-ton/pythonpagelink
+    - name: Sync Template Files
       env:
         REPO_URL: 'https://github.com/king-tri-ton/pythonpagelink.git'
-      run: git clone "$REPO_URL" "$TEMP_CLONE"
-
-    - name: Rsync only new files into current directory
-      run: rsync -av --ignore-existing "$TEMP_CLONE/" .
+      run: |
+        git clone "$REPO_URL" temp-clone
+        rsync -av --ignore-existing temp-clone .
 
     - run: uv pip install -r requirements.txt
 
