@@ -9,6 +9,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
+      OUTPUT_PATH: 'docs'
       SCRIPT_NAME: 'generate_site.py'
 
     steps:
@@ -32,3 +33,15 @@ jobs:
     - run: uv pip install -r requirements.txt
 
     - run: python $SCRIPT_NAME
+
+    - name: Push
+      run: |
+        git config --global user.name "github-actions[bot]" 
+        git config --global user.email "github-actions[bot]@users.noreply.github.com"
+        git add "$OUTPUT_PATH"
+        if git diff --cached --quiet; then
+          echo "updated=false"
+        else
+          git commit -m "generate site ${{ github.sha }} #${{ github.run_number }}"
+          git push
+        fi
