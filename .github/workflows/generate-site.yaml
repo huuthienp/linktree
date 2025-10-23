@@ -17,6 +17,9 @@ jobs:
     steps:
     - uses: actions/checkout@v5
 
+    - name: Install uv
+      uses: astral-sh/setup-uv@v7
+
     - name: Clone king-tri-ton/pythonpagelink
       env:
         REPO_URL: 'https://github.com/king-tri-ton/pythonpagelink.git'
@@ -24,9 +27,6 @@ jobs:
 
     - name: Rsync only new files into current directory
       run: rsync -av --ignore-existing "$TEMP_CLONE/" .
-
-    - name: Install uv
-      uses: astral-sh/setup-uv@v7
 
     - name: Set up Python
       run: uv python install $PYTHON_VERSION
