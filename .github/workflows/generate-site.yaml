@@ -30,8 +30,13 @@ jobs:
     - name: Set up virtual environment
       run: uv venv $UV_PROJECT --python $PYTHON_VERSION
 
+    - name: Activate virtual environment
+      run: source "$UV_PROJECT/bin/activate"
+
     - name: Install dependencies
-      run: uv run -p $UV_PROJECT pip install jinja2 pyyaml
+      # run: uv run -p $UV_PROJECT pip install jinja2 pyyaml
+      run: uv pip install jinja2 pyyaml
 
     - name: Generate Site
-      run: uv run -p $UV_PROJECT python $SCRIPT_NAME
+      # run: uv run -p $UV_PROJECT python $SCRIPT_NAME
+      run: python $SCRIPT_NAME
