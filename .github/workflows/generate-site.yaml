@@ -11,15 +11,19 @@ jobs:
     env:
       SCRIPT_NAME: 'generate_site.py'
       PYTHON_VERSION: '3.12'
+      TEMP_CLONE: 'temp-clone'
       UV_PROJECT: '.venv'
 
     steps:
     - uses: actions/checkout@v5
 
-    - name: Fetch generate_site.py
+    - name: Clone king-tri-ton/pythonpagelink
       env:
-        SCRIPT_URL: 'https://raw.githubusercontent.com/king-tri-ton/pythonpagelink/refs/heads/master/generate_site.py'
-      run: curl -o $SCRIPT_NAME $SCRIPT_URL
+        REPO_URL: 'https://github.com/king-tri-ton/pythonpagelink.git'
+      run: git clone "$REPO_URL" "$TEMP_CLONE"
+
+    - name: Rsync only new files into current directory
+      run: rsync -av --ignore-existing "$TEMP_CLONE/" .
 
     - name: Install uv
       uses: astral-sh/setup-uv@v7
