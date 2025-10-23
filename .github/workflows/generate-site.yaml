@@ -1,0 +1,28 @@
+name: Generate Site
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v5
+
+    - name: Fetch generate_site.py
+      run: curl -o generate_site.py https://raw.githubusercontent.com/king-tri-ton/pythonpagelink/refs/heads/master/generate_site.py
+
+    - name: Install uv
+      uses: astral-sh/setup-uv@v7
+
+    - name: Set up Python
+      run: uv python install 3.12
+
+    - name: Install dependencies
+      run: uv pip install jinja2 pyyaml
+
+    - name: Generate Site
+      run: python generate_site.py
