@@ -27,7 +27,7 @@ jobs:
         REPO_URL: 'https://github.com/king-tri-ton/pythonpagelink.git'
       run: |
         git clone "$REPO_URL" temp-clone
-        rsync -av --ignore-existing temp-clone .
+        rsync -av --ignore-existing temp-clone/ .
 
     - run: uv pip install -r requirements.txt
 
